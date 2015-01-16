@@ -96,8 +96,6 @@
     coreDatabase.addEventListener("core-response",function(data){
       mainPage.databaseCmd = data.detail.response;
       console.dir(mainPage.databaseCmd);
-
-      if(mainPage.databaseCmd["turn on the lghts"]) console.dir("lol");
     })
 
     /** VOICE RECOGNITION **/
@@ -142,13 +140,13 @@
     })
 
     function doAction(command){
-      if(mainPage.databaseCmd[command]) {
-        coreAjax.setAttribute("url",mainPage.databaseCmd[command].url);
-        coreAjax.setAttribute("body",mainPage.databaseCmd[command].body);
+      if(!mainPage.databaseCmd[command]) return false;
 
-        isActivated = true;
-        voicePlayer.speak();
-      }
+      coreAjax.setAttribute("url",mainPage.databaseCmd[command].url);
+      coreAjax.setAttribute("body",mainPage.databaseCmd[command].body);
+
+      isActivated = true;
+      voicePlayer.speak();
     }
   </script>
 </body>
