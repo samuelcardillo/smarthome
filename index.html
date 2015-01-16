@@ -1,0 +1,155 @@
+<!doctype html>
+
+<html>
+<head>
+  <title>SmartHome</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+
+  <!-- CORE ELEMENTS -->
+  <link rel="import" href="bower_components/core-ajax/core-ajax.html">
+  <link rel="import" href="bower_components/core-icons/core-icons.html">
+  <link rel="import" href="bower_components/core-toolbar/core-toolbar.html">
+  <link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
+
+  <!-- ICONS ELEMENTS !-->
+  <link rel="import" href="bower_components/core-icons/hardware-icons.html">
+
+  <!-- PAPERS ELEMENTS !-->
+  <link rel="import" href="bower_components/paper-button/paper-button.html">
+  <link rel="import" href="bower_components/paper-fab/paper-fab.html">
+  <link rel="import" href="bower_components/paper-input/paper-input-decorator.html">
+
+  <!-- CUSTOM ELEMENTS !-->
+  <link rel="import" href="card.html">
+  <link rel="import" href="bower_components/voice-elements/dist/voice-player.html">
+  <link rel="import" href="bower_components/voice-elements/dist/voice-recognition.html">
+
+  <!-- GENERAL ELEMENTS !-->
+  <link rel="import" href="bower_components/font-roboto/roboto.html">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body fullbleed>
+  <core-ajax
+    auto
+    id="coreDatabase"
+    url="database.json"
+    handleAs="json"
+    method="GET">
+  </core-ajax>
+
+  <template is="auto-binding" id="mainPage">
+    <core-header-panel>
+      <core-toolbar>
+        SmartHome
+      </core-toolbar>
+      <div vertical layout>
+        <div horizontal layout>
+          <paper-card>
+            <paper-input-decorator floatingLabel label="Ask something...">
+              <input type="text" name="askInput" value="{{vCmdResult}}"/>
+            </paper-input-decorator>
+          </paper-card>
+        </div>
+        <template repeat="{{values in commandLog}}">
+          <div horizontal layout>
+            <paper-card>
+              <span>{{values}}</span>
+              <div horizontal layout end-justified>
+                <paper-button on-click="{{repeat}}">REPEAT</paper-button>
+              </div>
+            </paper-card>
+          </div>
+        </template>
+        <paper-fab class="{{ {active: itsListening}| tokenList}}" icon="hardware:keyboard-voice" on-click="{{startRecognition}}"></paper-fab>
+      </div>
+    </core-header-panel>
+  </template>
+
+   <core-ajax
+      id="coreAjax"
+      url="http://10.0.0.8/api/newdeveloper/lights/1/state/"
+      handleAs="json"
+      method="PUT"
+      body='{"on":false}'
+      on-core-response="document.handleResponse()"></core-ajax>
+
+  <voice-player autoplay text="Hello, what can I do for you ?" accent="en-US" id="vPlayer"></voice-player>
+  <voice-recognition continuous="false" id="vCmd"></voice-recognition>
+  <script>
+    var mainPage = document.getElementById("mainPage");
+    var voiceRecognition = document.querySelector("#vCmd");
+    var voicePlayer = document.querySelector("#vPlayer");
+    var coreAjax = document.querySelector("#coreAjax");
+    var coreDatabase = document.querySelector("#coreDatabase");
+
+    mainPage.itsListening = false;
+    mainPage.commandLog = [];
+    mainPage.databaseCmd = {};
+
+    /** DATABASE INIT **/
+    coreDatabase.addEventListener("core-response",function(data){
+      mainPage.databaseCmd = data.detail.response;
+      console.dir(mainPage.databaseCmd);
+
+      if(mainPage.databaseCmd["turn on the lghts"]) console.dir("lol");
+    })
+
+    /** VOICE RECOGNITION **/
+    var isActivated = false;
+
+    mainPage.startRecognition = function(){
+      voicePlayer.setAttribute("text","Let me do that for you...");
+      voiceRecognition.start();
+    }
+
+    mainPage.repeat = function(e,detail,sender){
+      doAction(sender.parentNode.parentNode.querySelector("span").innerText);
+    }
+
+    voiceRecognition.addEventListener("start",function(e){
+      mainPage.vCmdResult = null;
+      mainPage.itsListening = true;
+    })
+
+    voiceRecognition.addEventListener("result",function(e){
+      mainPage.vCmdResult = e.detail.result;
+      mainPage.commandLog.unshift(e.detail.result)
+      voiceRecognition.text = "";
+
+      doAction(mainPage.vCmdResult);
+    })
+
+    voiceRecognition.addEventListener("end",function(e){
+      mainPage.itsListening = false;
+    })
+
+    voicePlayer.addEventListener("end",function(e){
+      if(!isActivated) return false;
+
+      coreAjax.go();
+      isActivated = false;
+    })
+
+    /** AJAX SYSTEM **/
+    coreAjax.addEventListener("core-response",function(data){
+      console.dir(data.detail.response);
+    })
+
+    function doAction(command){
+      if(mainPage.databaseCmd[command]) {
+        coreAjax.setAttribute("url",mainPage.databaseCmd[command].url);
+        coreAjax.setAttribute("body",mainPage.databaseCmd[command].body);
+
+        isActivated = true;
+        voicePlayer.speak();
+      }
+    }
+  </script>
+</body>
+</html>

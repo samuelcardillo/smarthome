@@ -1,0 +1,15 @@
+{
+  "name": "PolymerTest",
+  "description": "",
+  "homepage": "",
+  "keywords": [
+  ],
+  "author": "",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#latest",
+    "paper-elements": "Polymer/paper-elements#latest",
+    "core-animated-pages":"Polymer/core-animated-pages#master",
+    "voice-elements":"zenorocha/voice-elements#latest"
+  }
+}

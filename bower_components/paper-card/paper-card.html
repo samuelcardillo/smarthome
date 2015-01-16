@@ -1,0 +1,73 @@
+<!-- 
+  DEPENDENCY : 
+    PAPER-BUTTON
+!-->
+
+<polymer-element name="paper-card" attributes="showImage width src">
+  <template>
+    <style>
+      :host {
+        color: black;
+        padding: 8px;
+        display: inline-block;
+      }
+
+      core-toolbar {
+        height: 200px;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+
+      #cardTitle {
+        padding: 16px;
+        color: white;
+        font-size: 24px;
+        background-color: grey;
+        opacity: 0.93;
+      }
+
+      #cardContent {
+        background-color: white;
+        font-size: 16px;
+        padding: 16px;
+      }
+
+      #cardBottom {
+        background-color: white;
+        font-size: 14px;
+        padding-bottom: 8px;
+        padding-top: 8px;
+        border-top: 1px solid #DCDCDC;
+      }
+
+      paper-button {
+        min-width: 0px;
+        margin-left: 8px;
+        color: #212121;
+      }
+    </style>
+
+    <div vertical layout style="min-width: {{width}}vw;">
+      <paper-shadow z="1">
+        <template if="{{showImage}}">
+          <core-toolbar id="coretoolbar" style="background-image: url('{{src}}');" hero-id="paper-card-image-toolbar" hero>
+            <div class="bottom fit" id="cardTitle"><content select="cardTitle"></content></div>
+          </core-toolbar>
+        </template>
+        <div id="cardContent">
+          <content select="cardContent"></content>
+        </div>
+        <div id="cardBottom">
+          <content select="cardBottom"></content>
+        </div>
+      </paper-shadow>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      showImage: false,
+      width: 31.97,
+      src: null,
+    })
+  </script>
+</polymer-element>
