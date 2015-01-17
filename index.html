@@ -81,6 +81,8 @@
     mainPage.itsListening = false;
     mainPage.commandLog = [];
 
+    mainPage.commandLog.unshift("allumer lumière chambre");
+
     /** VOICE RECOGNITION **/
     var isActivated = false;
 
@@ -90,6 +92,8 @@
     }
 
     mainPage.repeat = function(e,detail,sender){
+      voicePlayer.setAttribute("text","Repeating the action...");
+      voicePlayer.textChanged();
       doAction(sender.parentNode.parentNode.querySelector("span").innerText);
     }
 
@@ -120,6 +124,9 @@
     /** AJAX SYSTEM **/
     coreAjax.addEventListener("core-response",function(data){
       console.dir(data.detail.response);
+      voicePlayer.setAttribute("text",data.detail.response);
+      voicePlayer.textChanged();
+      voicePlayer.speak();
     })
 
     function doAction(command){

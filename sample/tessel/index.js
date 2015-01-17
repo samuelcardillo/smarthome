@@ -6,7 +6,7 @@ var http		 =		require('http');
 var climateData = {};
 
 var httpServer = http.createServer(function(req, res){
-  res.end(JSON.stringify(climateData));
+  res.end("The temperature is actually : "+climateData.temp+" celsius");
 });
 
 httpServer.listen(1337);

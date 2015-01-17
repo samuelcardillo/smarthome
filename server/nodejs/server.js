@@ -20,14 +20,18 @@ app.post('/',function(req,res){
 	var actionsDb      = 		require("./actions.json");
 	var command = req.body.cmd;
 
+	res.setHeader('Access-Control-Allow-Origin', '*');
+
 	console.log("Received : "+command);
 	if(!sentencesDb[command]) {
 		console.log("[O] Command not recognized : "+command);
+		res.end("Command not recognized");
 		return false;
 	}
 
 	if(!actionsDb[sentencesDb[command]]) {
 		console.log("[O] Request action doesnt exist.");
+		res.end("Action doesn't exist");
 		return false;
 	}
 	var action = actionsDb[sentencesDb[command]];
@@ -49,7 +53,6 @@ app.post('/',function(req,res){
 	    }
 
 	    console.log('[I] Action done with success.');
-	    res.setHeader('Access-Control-Allow-Origin', '*');
 	    res.end(answer);
   	})
 });
