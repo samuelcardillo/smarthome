@@ -2,6 +2,8 @@
 
 ## Introduction
 
+Last Revision : 17 January 2015
+
 SmartHome ([check the video](https://www.youtube.com/watch?v=0_fc6otGhpU)) is a service built for fun. This is the first version which allow you to add dynamically actions
 and control any IoT devices who run at least one REST API service.
 
@@ -30,6 +32,5 @@ Initial structure :
 
 ## TO DO :
 
-Lot of improvments will come in few days in order to make the plateform smarter. The architecture will change from 
-sentence = action to action = sentence(s). Wait and see, the code will be published over here.
+Lot of improvments will come in few days in order to make the plateform smarter.
 

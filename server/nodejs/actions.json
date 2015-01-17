@@ -1,0 +1,12 @@
+{
+  "1":
+  {
+    "method": "PUT",
+    "url": "http://10.0.0.8/api/newdeveloper/lights/3/state/",
+    "body":"{\"on\":true}",
+    "speech": {
+      "onSuccess": "Lights turned on",
+      "onError": "An error occured"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+
+html,body {
+  font-family: RobotoDraft;
+  color: #333;
+  margin: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-touch-callout: none;
+}
+
+core-toolbar {
+  background-color: #2196F3;
+  color: white;
+}
+
+core-header-panel {
+  height: 100%;
+  width: 100%;
+  background-color: #E3F2FD;
+}
+
+paper-fab {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  bottom: 8px;
+  margin: auto;
+}
+
+.active {
+  background: grey;
+}

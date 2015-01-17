@@ -35,14 +35,6 @@
 </head>
 
 <body fullbleed>
-  <core-ajax
-    auto
-    id="coreDatabase"
-    url="database.json"
-    handleAs="json"
-    method="GET">
-  </core-ajax>
-
   <template is="auto-binding" id="mainPage">
     <core-header-panel>
       <core-toolbar>
@@ -73,11 +65,10 @@
 
    <core-ajax
       id="coreAjax"
-      url="http://10.0.0.8/api/newdeveloper/lights/1/state/"
-      handleAs="json"
-      method="PUT"
-      body='{"on":false}'
-      on-core-response="document.handleResponse()"></core-ajax>
+      url="http://127.0.0.1:1337/"
+      handleAs="text"
+      method="POST"
+      params=''></core-ajax>
 
   <voice-player autoplay text="Hello, what can I do for you ?" accent="en-US" id="vPlayer"></voice-player>
   <voice-recognition continuous="false" id="vCmd"></voice-recognition>
@@ -86,17 +77,9 @@
     var voiceRecognition = document.querySelector("#vCmd");
     var voicePlayer = document.querySelector("#vPlayer");
     var coreAjax = document.querySelector("#coreAjax");
-    var coreDatabase = document.querySelector("#coreDatabase");
 
     mainPage.itsListening = false;
     mainPage.commandLog = [];
-    mainPage.databaseCmd = {};
-
-    /** DATABASE INIT **/
-    coreDatabase.addEventListener("core-response",function(data){
-      mainPage.databaseCmd = data.detail.response;
-      console.dir(mainPage.databaseCmd);
-    })
 
     /** VOICE RECOGNITION **/
     var isActivated = false;
@@ -140,10 +123,7 @@
     })
 
     function doAction(command){
-      if(!mainPage.databaseCmd[command]) return false;
-
-      coreAjax.setAttribute("url",mainPage.databaseCmd[command].url);
-      coreAjax.setAttribute("body",mainPage.databaseCmd[command].body);
+      coreAjax.setAttribute("params",'{"cmd":"'+command+'"}');
 
       isActivated = true;
       voicePlayer.speak();
