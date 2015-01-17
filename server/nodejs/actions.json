@@ -8,5 +8,12 @@
       "onSuccess": "Lights turned on",
       "onError": "An error occured"
     }
+  },
+  "2":
+  {
+    "method": "GET",
+    "url": "http://192.168.43.216:1337/",
+    "body":"",
+    "speech": false
   }
 }
