@@ -10,6 +10,11 @@ The first version was built in less than 5 hours using Polymer. Tests were made 
 
 #Have fun !
 
+##Possibilities are limitless :
+You can interact with any RESTful API service
+
+For exemple, controlling an AC is very simple ! Take a Tessel, put an IR blaster on it and control it through SmartHome (and put a climate sensor if you want to activate the AC when the temperature is below or over a value)
+
 ### TO DO :
 
 Lot of improvments will come in few days in order to make the plateform smarter. Here is some of them :
