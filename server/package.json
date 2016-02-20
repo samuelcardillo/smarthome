@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "smarthome.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "moment": "^2.11.2",
+    "path": "^0.12.7",
+    "request": "^2.67.0",
+    "rethinkdb": "^2.2.1",
+    "session-file-store": "^0.0.24",
+    "socket.io": "^1.4.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
