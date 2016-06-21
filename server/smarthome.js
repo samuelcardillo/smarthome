@@ -55,6 +55,7 @@ app.post('/',function(req,res){
 
   console.log("[I] New command : " + req.body.order);
 
+
   core.sendCommand(req.body, function(output) {
     response = {
       request: req.body.order,
@@ -64,5 +65,3 @@ app.post('/',function(req,res){
     res.end(JSON.stringify(response));
   });
 })
-
-

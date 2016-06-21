@@ -57,7 +57,7 @@ _checkDate = function(command,callback) {
         answer.timestamp = moment().subtract(1, 'd').unix()
       }
 
-      console.log(k);
+      // console.log(k);
 
       answer.text = k;
 
@@ -68,7 +68,7 @@ _checkDate = function(command,callback) {
 }
 
 _checkWeather = function(coordinates,timestamp,callback) {
-  console.log(timestamp);
+  // console.log(timestamp);
   request("https://api.forecast.io/forecast/41918beaccca59d8b7c9897b71bc90e9/"+coordinates.lat+","+coordinates.lng+","+timestamp, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       var body = JSON.parse(body);
