@@ -51,15 +51,17 @@ _checkDate = function(command,callback) {
     for(var k in e) {
       if(!e[k]) continue;
 
+      
+
       if(k == "tomorrow") {
         answer.timestamp = moment().add(1, 'd').unix()
       } else if(k == "yesterday") {
         answer.timestamp = moment().subtract(1, 'd').unix()
       }
 
-      // console.log(k);
-
       answer.text = k;
+
+      
 
       return callback(answer);
     }

@@ -23,7 +23,7 @@ searchInArray = function(command,array,callback) {
   var response = {};
 
   for(var k in array) {
-    response[array[k]] = (command.indexOf(array[k]) == -1) ? false : true; 
+    response[array[k]] = (command.toLowerCase().indexOf(array[k]) == -1) ? false : true; 
   }
 
   return callback(response);
